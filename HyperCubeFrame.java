@@ -65,9 +65,10 @@ public class HyperCubeFrame extends JFrame {
 					rotated[i]=Matrix.MatMulVec(rotation,points.get(i).toVec());
 					double z = rotated[i][2];
 					if(perspectiveButton.isSelected())
-						projected2D[i] = Matrix.MatMulVec(Matrix.projectionFrom3DTo2D(distance, z), rotated[i]);
+						projected2D[i] = Matrix.MatMulVec(Matrix.projectionFrom4DTo2D(distance, z), rotated[i]);
 					else {
-						projected2D[i] = Matrix.MatMulVec(Matrix.projectionFrom3DTo2D(1, 0), rotated[i]);
+						projected2D[i][0] = rotated[i][0];
+						projected2D[i][1] = rotated[i][1];
 					}
 				}
 				

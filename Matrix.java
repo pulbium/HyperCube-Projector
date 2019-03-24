@@ -101,4 +101,12 @@ public class Matrix {
 			{0,distance/(distance-z),0}
 		};
 	}
+
+
+	static double[][] projectionFrom4DTo2D(double distance,double z){
+		return new double[][] {
+			{distance/(distance-z),0,0,0},
+			{0,distance/(distance-z),0,0}
+		};
+	}
 }
