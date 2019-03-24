@@ -66,15 +66,11 @@ public class Point4D extends Point{
 		this.w=w;
 	}	
 	
-	double[] toVec(int n){
-		double[] m = new double[n];
-		if(n>1) {
+	double[] toVec(){
+		double[] m = new double[4];
 			m[0] = x;
 			m[1] = y;
-		}
-		if(n>2)
 			m[2] = z;
-		if(n>3)
 			m[3] = w;
 		
 		return m;
