@@ -38,7 +38,7 @@ public class HyperCubeFrame extends JFrame {
 				for(int i=0;i<4;i++) {
 					rotation = Matrix.rotationXY(xySlider.angle);
 					
-					rotated[i]=Matrix.MatMulVec(rotation,points.get(i).toVec(4));
+					rotated[i]=Matrix.MatMulVec(rotation,points.get(i).toVec());
 				}
 				
 				for(int j=0;j<4;j++) {
@@ -57,15 +57,15 @@ public class HyperCubeFrame extends JFrame {
 				points.add(new Point4D(-size,size,size));
 
 				double[][] rotated = new double[8][4];
-				double[][] projected2D = new double[8][4];
+				double[][] projected2D = new double[8][2];
 				
 				for(int i=0;i<8;i++) {
 					rotation = Matrix.MatMulMat(Matrix.MatMulMat(Matrix.rotationXY(xySlider.angle), Matrix.rotationYZ(yzSlider.angle)),	Matrix.rotationXZ(xzSlider.angle));	
 	
-					rotated[i]=Matrix.MatMulVec(rotation,points.get(i).toVec(4));
+					rotated[i]=Matrix.MatMulVec(rotation,points.get(i).toVec());
 					double z = rotated[i][2];
 					if(perspectiveButton.isSelected())
-						projected2D[i] = Matrix.MatMulVec(Matrix.projectionFrom3DTo2D(200, z), rotated[i]);
+						projected2D[i] = Matrix.MatMulVec(Matrix.projectionFrom3DTo2D(distance, z), rotated[i]);
 					else {
 						projected2D[i] = Matrix.MatMulVec(Matrix.projectionFrom3DTo2D(1, 0), rotated[i]);
 					}
@@ -78,7 +78,75 @@ public class HyperCubeFrame extends JFrame {
 				}
 			}
 			else if(fourDButton.isSelected()) {
+				points.removeAll(points);
+				points.add(new Point4D(-size,-size,-size,size));
+				points.add(new Point4D(size,-size,-size,size));
+				points.add(new Point4D(size,size,-size,size));
+				points.add(new Point4D(-size,size,-size,size));
+				points.add(new Point4D(-size,-size,size,size));
+				points.add(new Point4D(size,-size,size,size));
+				points.add(new Point4D(size,size,size,size));
+				points.add(new Point4D(-size,size,size,size));
+
+				points.add(new Point4D(-size,-size,-size,-size));
+				points.add(new Point4D(size,-size,-size,-size));
+				points.add(new Point4D(size,size,-size,-size));
+				points.add(new Point4D(-size,size,-size,-size));
+				points.add(new Point4D(-size,-size,size,-size));
+				points.add(new Point4D(size,-size,size,-size));
+				points.add(new Point4D(size,size,size,-size));
+				points.add(new Point4D(-size,size,size,-size));
+
+				double[][] rotated = new double[16][4];
+				double[][] projected3D = new double[16][3];
+				double[][] projected2D = new double[16][2];
 				
+				rotation = 
+						Matrix.MatMulMat(
+							Matrix.MatMulMat(
+								Matrix.MatMulMat(
+									Matrix.MatMulMat(
+										Matrix.MatMulMat(
+											Matrix.rotationXY(xySlider.angle), 
+											Matrix.rotationYZ(yzSlider.angle)
+														), 
+										Matrix.rotationXZ(xzSlider.angle)
+												), 
+									Matrix.rotationXW(xwSlider.angle)
+										), 
+								Matrix.rotationYW(ywSlider.angle)
+								), 
+							Matrix.rotationZW(zwSlider.angle)
+						);
+				for(int i = 0;i<16;i++) {
+					rotated[i] = Matrix.MatMulVec(rotation, points.get(i).toVec());
+					if(perspectiveButton.isSelected()) {
+						double w = rotated[i][3];
+						projected3D[i] = Matrix.MatMulVec(Matrix.projectionFrom4DTo3D(distance, w), rotated[i]);
+						double z = projected3D[i][2];
+						projected2D[i] = Matrix.MatMulVec(Matrix.projectionFrom3DTo2D(distance, z), projected3D[i]);
+					}
+					else {
+						projected2D[i][0] = rotated[i][0];
+						projected2D[i][1] = rotated[i][1];
+						
+					}
+				}
+				
+				for(int j = 0;j<4;j++) {
+					
+					g2.drawLine((int)projected2D[j][0],  (int)projected2D[j][1],  (int)projected2D[(j+1)%4][0],  (int)projected2D[(j+1)%4][1]);
+					g2.drawLine((int)projected2D[j+4][0],(int)projected2D[j+4][1],(int)projected2D[(j+1)%4+4][0],(int)projected2D[(j+1)%4+4][1]);
+					g2.drawLine((int)projected2D[j][0],  (int)projected2D[j][1],  (int)projected2D[j+4][0],      (int)projected2D[j+4][1]);
+
+					g2.drawLine((int)projected2D[j+8][0],  (int)projected2D[j+8][1],  (int)projected2D[(j+1)%4+8][0],  (int)projected2D[(j+1)%4+8][1]);
+					g2.drawLine((int)projected2D[j+4+8][0],(int)projected2D[j+4+8][1],(int)projected2D[(j+1)%4+4+8][0],(int)projected2D[(j+1)%4+4+8][1]);
+					g2.drawLine((int)projected2D[j+8][0],  (int)projected2D[j+8][1],  (int)projected2D[j+4+8][0],      (int)projected2D[j+4+8][1]);
+					
+					g2.drawLine((int)projected2D[j][0],  (int)projected2D[j][1],  (int)projected2D[j+8][0], (int)projected2D[j+8][1]);
+					g2.drawLine((int)projected2D[j+4][0],(int)projected2D[j+4][1],(int)projected2D[j+12][0],(int)projected2D[j+12][1]);
+
+				}
 			}
 			repaint();
 		}
@@ -130,7 +198,7 @@ public class HyperCubeFrame extends JFrame {
 	JMenuItem changeDistance = new JMenuItem("Odleg³oœæ obserwatora");
 	
 	Color lineColor = Color.black;
-	int lineThickness=2, size=50, distance=0;
+	int lineThickness=2, size=50, distance=200;
 	
 	public HyperCubeFrame() {
 				
@@ -255,7 +323,7 @@ public class HyperCubeFrame extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				perspectiveButton.setEnabled(false);
+				perspectiveButton.setEnabled(true);
 				
 				yzSlider.setEnabled(true);
 				xzSlider.setEnabled(true);
