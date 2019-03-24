@@ -97,8 +97,8 @@ public class Matrix {
 	
 	static double[][] projectionFrom3DTo2D(double distance,double z){
 		return new double[][] {
-			{distance/(distance-z),0,0,0},
-			{0,distance/(distance-z),0,0}
+			{distance/(distance-z),0,0},
+			{0,distance/(distance-z),0}
 		};
 	}
 }
