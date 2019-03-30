@@ -5,42 +5,7 @@ import java.awt.Point;
 public class Point4D extends Point{
 	private static final long serialVersionUID = 1L;
 	private	double x,y,z,w;
-
-	@Override
-	public double getX() {
-		return super.getX();
-	}
 	
-	@Override
-	public double getY() {
-		return super.getY();
-	}
-	
-	public double getZ() {
-		return z;
-	}
-	
-	public double getW() {
-		return w;
-	}
-	
-	/*
-	public void setX(double x) {
-		this.x = x;
-	}
-	
-	public void setY(double y) {
-		this.y = y;
-	}
-	
-	public void setZ(double z) {
-		this.z = z;
-	}
-	
-	public void setW(double w) {
-		this.w = w;
-	}
-	*/
 	public Point4D() {
 		this.x=0;
 		this.y=0;

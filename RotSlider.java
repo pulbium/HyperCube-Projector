@@ -9,9 +9,12 @@ import javax.swing.event.ChangeListener;
 
 public class RotSlider extends JSlider {
 	
-	double angle;
+	private static final long serialVersionUID = 1L;
 	
-	public RotSlider(String toolTip, JTextField textField) {
+	double angle;
+	JTextField textField = new JTextField("000");
+	
+	public RotSlider(String toolTip) {
 		super(0,360,0);
 		setValue(0);
 		setEnabled(false);
@@ -20,7 +23,8 @@ public class RotSlider extends JSlider {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				angle = (double)getValue()/180*Math.PI;
-				textField.setText(String.format("%d", getValue())+"°");
+				textField.setText(String.format("%d", getValue()));
+				
 			}
 		});
 		
@@ -30,8 +34,17 @@ public class RotSlider extends JSlider {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				setValue(Integer.parseInt(textField.getText()));
-				
+				try {
+					if(Integer.parseInt(textField.getText())>360) {
+						int n=Integer.parseInt(textField.getText())/360;
+						setValue(Integer.parseInt(textField.getText())-n*360);
+					}
+					else {
+						setValue(Integer.parseInt(textField.getText()));
+					}
+				}catch(NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "Ile wynosi k¹t "+textField.getText()+"°?", "Podano z³y k¹t", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 	}

@@ -33,58 +33,22 @@ public class Matrix {
 		return product;
 	}
 	
-	static double[][] rotationXY(double angle){
-		return new double[][]{
-			{Math.cos(angle),-Math.sin(angle),0,0},
-			{Math.sin(angle),Math.cos(angle),0,0},
-			{0,0,1,0},
-			{0,0,0,1}
-		};
-	}
-	
-	static double[][] rotationYZ(double angle) {
-		return new double[][]{
-			{1,0,0,0},
-			{0,Math.cos(angle),-Math.sin(angle),0},
-			{0,Math.sin(angle),Math.cos(angle),0},
-			{0,0,0,1}
-		};
-	}
-	
-	static double[][] rotationXZ(double angle) {
-		return new double[][]{
-			{Math.cos(angle),0,-Math.sin(angle),0},
-			{0,1,0,0},
-			{Math.sin(angle),0,Math.cos(angle),0},
-			{0,0,0,1}
-		};
-	}
-	
-	static double[][] rotationXW(double angle) {
-		return new double[][]{
-			{Math.cos(angle),0,0,-Math.sin(angle)},
-			{0,1,0,0},
-			{0,0,1,0},
-			{Math.sin(angle),0,0,Math.cos(angle)}
-		};
-	}
-	
-	static double[][] rotationYW(double angle) {
-		return new double[][]{
-			{1,0,0,0},
-			{0,Math.cos(angle),0,-Math.sin(angle)},
-			{0,0,1,0},
-			{0,Math.sin(angle),0,Math.cos(angle)}
-		};
-	}
-	
-	static double[][] rotationZW(double angle) {
-		return new double[][]{
-			{1,0,0,0},
-			{0,1,0,0},
-			{0,0,Math.cos(angle),-Math.sin(angle)},
-			{0,0,Math.sin(angle),Math.cos(angle)}
-		};
+	static double[][] rotationMatrix(int x1, int x2, double angle){
+		double[][] m = new double[4][4];
+		for(int i = 0;i<4;i++)
+			for(int j = 0;j<4;j++) {
+				if(i==j)
+					m[i][j]=1;
+				else 
+					m[i][j]=0;
+			}
+		
+		m[x1][x1]=Math.cos(angle);
+		m[x1][x2]=-Math.sin(angle);
+		m[x2][x1]=Math.sin(angle);
+		m[x2][x2]=Math.cos(angle);
+		
+		return m;
 	}
 	
 	static double[][] projectionFrom4DTo3D(double distance,double w){
