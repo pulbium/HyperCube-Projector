@@ -19,7 +19,6 @@ public class HyperCubeMenuBar extends JMenuBar {
 
 	JMenu fileMenu = new JMenu("Plik");
 	JMenuItem save = new JMenuItem("Zapisz obraz");
-	JMenuItem load = new JMenuItem("Dodaj obiekt (ewentualnie, ale raczej nie)");
 	
 	JMenu colorMenu = new JMenu("Obraz");
 	JMenuItem changeBG = new JMenuItem("Zmieñ kolor t³a");
@@ -89,7 +88,6 @@ public class HyperCubeMenuBar extends JMenuBar {
 		});
 				
 		fileMenu.add(save);
-		fileMenu.add(load);
 		colorMenu.add(changeBG);
 		colorMenu.add(changeLine);
 		colorMenu.add(changeThickness);

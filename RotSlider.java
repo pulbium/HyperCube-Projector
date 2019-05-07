@@ -13,6 +13,7 @@ public class RotSlider extends JSlider {
 	
 	double angle;
 	JTextField textField = new JTextField("000");
+	JToggleButton playButton = new JToggleButton();
 	
 	public RotSlider(String toolTip) {
 		super(0,360,0);
@@ -46,6 +47,8 @@ public class RotSlider extends JSlider {
 					JOptionPane.showMessageDialog(null, "Ile wynosi k¹t "+textField.getText()+"°?", "Podano z³y k¹t", JOptionPane.ERROR_MESSAGE);
 				}
 			}
-		});
+		});	
+	
+		
 	}
 }

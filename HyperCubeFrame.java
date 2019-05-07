@@ -2,6 +2,8 @@ package hypercube;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class HyperCubeFrame extends JFrame {
 	
@@ -39,7 +41,7 @@ public class HyperCubeFrame extends JFrame {
 		setLayout(new BorderLayout());
 		bottomPanel.setLayout(new BorderLayout());
 		slidersPanel.setLayout(new GridLayout(12,1));
-		valuesPanel.setLayout(new GridLayout(6,2));
+		valuesPanel.setLayout(new GridLayout(6,3));
 		menuPanel.setLayout(new GridLayout(7,1));
 		
 				
@@ -54,6 +56,7 @@ public class HyperCubeFrame extends JFrame {
 		for(int i = 0;i<6;i++) {
 			slidersPanel.add(new JLabel(sliderNames[i]));
 			slidersPanel.add(projectionPanel.sliders[i]);
+			valuesPanel.add(sliders[i].playButton);
 			valuesPanel.add(sliders[i].textField);
 			valuesPanel.add(new JLabel("°"));
 		}
@@ -70,7 +73,13 @@ public class HyperCubeFrame extends JFrame {
 	}
 	
 	public static void main(String[] args) {
-		HyperCubeFrame frame = new HyperCubeFrame();
-		frame.setVisible(true);
+		SwingUtilities.invokeLater(new Runnable(){
+			public void run() {
+				HyperCubeFrame frame = new HyperCubeFrame();
+				frame.setVisible(true);
+				ExecutorService exec = Executors.newSingleThreadExecutor();
+				exec.shutdown();
+			}
+		});
 	}
 }

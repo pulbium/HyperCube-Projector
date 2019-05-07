@@ -38,6 +38,7 @@ public class ProjectionPanel extends JPanel {
 				for(int i = 0;i!=2 && i<6;i++) {
 					sliders[i].setValue(0);
 					sliders[i].setEnabled(false);
+					sliders[i].playButton.setEnabled(false);
 					sliders[i].textField.setText("000");
 				}
 			}
@@ -50,11 +51,15 @@ public class ProjectionPanel extends JPanel {
 				perspectiveButton.setEnabled(true);
 				
 				sliders[0].setEnabled(true);
+				sliders[0].playButton.setEnabled(true);
 				sliders[1].setEnabled(true);
+				sliders[1].playButton.setEnabled(true);
 				sliders[2].setEnabled(true);
+				sliders[2].playButton.setEnabled(true);
 				for(int i = 3;i<6;i++) {
 					sliders[i].setValue(0);
 					sliders[i].setEnabled(false);
+					sliders[i].playButton.setEnabled(false);
 					sliders[i].textField.setText("000");
 				}
 				
@@ -66,8 +71,10 @@ public class ProjectionPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				perspectiveButton.setEnabled(true);
-				for(int i = 0;i<6;i++)
+				for(int i = 0;i<6;i++) {
 					sliders[i].setEnabled(true);
+					sliders[i].playButton.setEnabled(true);
+				}
 			}
 		});
 		
@@ -118,9 +125,6 @@ public class ProjectionPanel extends JPanel {
 						), 
 					Matrix.rotationMatrix(2,3,sliders[5].angle)
 				);
-				
-		//for(int i = 0;i<5;i++)
-		//	rotation = Matrix.MatMulMat(Matrix.rotationMatrix(i, i+1, ), m2)
 			
 		if(twoDButton.isSelected()) {
 			points.removeAll(points);
