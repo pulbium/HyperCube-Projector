@@ -4,14 +4,15 @@ import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
 
 import javax.imageio.ImageIO;
 import javax.swing.JColorChooser;
+import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileSystemView;
 
 public class HyperCubeMenuBar extends JMenuBar {
 
@@ -35,13 +36,17 @@ public class HyperCubeMenuBar extends JMenuBar {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				BufferedImage image = new BufferedImage(projectionPanel.getWidth(),projectionPanel.getHeight(),BufferedImage.TYPE_USHORT_555_RGB);
-				Graphics2D g2 = image.createGraphics();
-				projectionPanel.paintComponent(g2);
-				try {
-					ImageIO.write(image,"png", new File(JOptionPane.showInputDialog("Podaj nazwê pliku, który chcesz zapisaæ:","Untitled")+"."+"png"));
-				} catch(Exception e1){
-					e1.printStackTrace();
+				JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+				int returnValue = jfc.showSaveDialog(null);
+				if (returnValue == JFileChooser.APPROVE_OPTION) {
+					BufferedImage image = new BufferedImage(projectionPanel.getWidth(),projectionPanel.getHeight(),BufferedImage.TYPE_USHORT_555_RGB);
+					Graphics2D g2 = image.createGraphics();
+					projectionPanel.paintComponent(g2);
+					try {
+						ImageIO.write(image,"png", jfc.getSelectedFile());
+					} catch(Exception e1){
+						e1.printStackTrace();
+					}
 				}
 			}
 		});

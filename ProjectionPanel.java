@@ -35,12 +35,13 @@ public class ProjectionPanel extends JPanel {
 				paralellButton.setSelected(true);
 				perspectiveButton.setEnabled(false);
 				
-				for(int i = 0;i!=2 && i<6;i++) {
+				for(int i = 0;i<6;i++) {
 					sliders[i].setValue(0);
 					sliders[i].setEnabled(false);
 					sliders[i].playButton.setEnabled(false);
 					sliders[i].textField.setText("000");
 				}
+				sliders[2].setEnabled(true);
 			}
 		});
 		
