@@ -11,9 +11,9 @@ public class HyperCubeFrame extends JFrame {
 	
 	//slidery
 	
-	RotSlider xySlider = new RotSlider("Obraca wzglêdem p³aszczyzny XY");
-	RotSlider yzSlider = new RotSlider("Obraca wzglêdem p³aszczyzny YZ");
 	RotSlider xzSlider = new RotSlider("Obraca wzglêdem p³aszczyzny XZ");
+	RotSlider yzSlider = new RotSlider("Obraca wzglêdem p³aszczyzny YZ");
+	RotSlider xySlider = new RotSlider("Obraca wzglêdem p³aszczyzny XY",true);
 	RotSlider xwSlider = new RotSlider("Obraca wzglêdem p³aszczyzny XW");
 	RotSlider ywSlider = new RotSlider("Obraca wzglêdem p³aszczyzny YW");
 	RotSlider zwSlider = new RotSlider("Obraca wzglêdem p³aszczyzny ZW");
@@ -23,6 +23,7 @@ public class HyperCubeFrame extends JFrame {
 	
 	//panele
 	
+	JPanel uselessPanel = new JPanel();
 	JPanel menuPanel = new JPanel();
 	ProjectionPanel projectionPanel = new ProjectionPanel(sliders);
 	JPanel bottomPanel = new JPanel();
@@ -33,8 +34,7 @@ public class HyperCubeFrame extends JFrame {
 	
 	
 	public HyperCubeFrame() {
-				
-		projectionPanel.sliders[2].setEnabled(true);
+
 		setJMenuBar(menuBar);
 		
 		
@@ -64,12 +64,15 @@ public class HyperCubeFrame extends JFrame {
 		bottomPanel.add(slidersPanel,BorderLayout.CENTER);
 		bottomPanel.add(valuesPanel,BorderLayout.EAST);
 		
+		
+		uselessPanel.setBackground(null);
+		add(uselessPanel,BorderLayout.EAST);		
 		add(projectionPanel,BorderLayout.CENTER);
 		add(menuPanel,BorderLayout.WEST);
 		add(bottomPanel,BorderLayout.SOUTH);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setTitle("HyperCubeProjector");
-		setSize(1000, 800);
+		setSize(1024, 768);
 	}
 	
 	public static void main(String[] args) {

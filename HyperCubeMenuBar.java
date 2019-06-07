@@ -26,10 +26,10 @@ public class HyperCubeMenuBar extends JMenuBar {
 	JMenuItem changeLine = new JMenuItem("Zmieñ kolor linii");
 	JMenuItem changeThickness = new JMenuItem("Zmieñ gruboœæ linii");
 	
-	JMenu optionsMenu = new JMenu("Opcje");
+	JMenu optionsMenu = new JMenu("Parametry");
 	JMenuItem changeSize = new JMenuItem("Rozmiar hiperszeœcianu");
 	JMenuItem changeDistance = new JMenuItem("Odleg³oœæ obserwatora");
-	
+
 	public HyperCubeMenuBar(ProjectionPanel projectionPanel) {
 		
 		save.addActionListener(new ActionListener() {
@@ -91,7 +91,7 @@ public class HyperCubeMenuBar extends JMenuBar {
 				projectionPanel.distance = Integer.parseInt(JOptionPane.showInputDialog("Podaj odleg³oœæ obserwatora:", 200));
 			}
 		});
-				
+		
 		fileMenu.add(save);
 		colorMenu.add(changeBG);
 		colorMenu.add(changeLine);

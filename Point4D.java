@@ -1,10 +1,14 @@
 package hypercube;
 
 import java.awt.Point;
+import java.util.ArrayList;
+
+import javax.swing.JLabel;
 
 public class Point4D extends Point{
 	private static final long serialVersionUID = 1L;
 	private	double x,y,z,w;
+	JLabel coords = new JLabel();
 	
 	public Point4D() {
 		this.x=0;
@@ -31,6 +35,21 @@ public class Point4D extends Point{
 		this.w=w;
 	}	
 	
+	public double getX() {
+		return x;
+	}
+	
+	public double getY() {
+		return y;
+	}
+	
+	public double getZ() {
+		return z;
+	}
+	
+	public double getW() {
+		return w;
+	}
 	double[] toVec(){
 		double[] m = new double[4];
 			m[0] = x;
@@ -39,6 +58,6 @@ public class Point4D extends Point{
 			m[3] = w;
 		
 		return m;
-	 }
+	}
 }
 

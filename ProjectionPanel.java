@@ -26,6 +26,7 @@ public class ProjectionPanel extends JPanel {
 	
 	public ProjectionPanel(RotSlider[] sliders) {
 		super();
+		setLayout(null);
 		this.sliders=sliders;
 		twoDButton.setSelected(true);
 		twoDButton.addActionListener(new ActionListener() {
@@ -39,9 +40,11 @@ public class ProjectionPanel extends JPanel {
 					sliders[i].setValue(0);
 					sliders[i].setEnabled(false);
 					sliders[i].playButton.setEnabled(false);
+					sliders[i].textField.setEnabled(false);
 					sliders[i].textField.setText("000");
 				}
 				sliders[2].setEnabled(true);
+				sliders[2].textField.setEnabled(true);
 			}
 		});
 		
@@ -51,16 +54,16 @@ public class ProjectionPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				perspectiveButton.setEnabled(true);
 				
-				sliders[0].setEnabled(true);
-				sliders[0].playButton.setEnabled(true);
-				sliders[1].setEnabled(true);
-				sliders[1].playButton.setEnabled(true);
-				sliders[2].setEnabled(true);
-				sliders[2].playButton.setEnabled(true);
+				for(int i = 0;i < 3;i++) {
+					sliders[i].setEnabled(true);
+					sliders[i].playButton.setEnabled(true);
+					sliders[i].textField.setEnabled(true);
+				}
 				for(int i = 3;i<6;i++) {
 					sliders[i].setValue(0);
 					sliders[i].setEnabled(false);
 					sliders[i].playButton.setEnabled(false);
+					sliders[i].textField.setEnabled(false);
 					sliders[i].textField.setText("000");
 				}
 				
@@ -75,6 +78,7 @@ public class ProjectionPanel extends JPanel {
 				for(int i = 0;i<6;i++) {
 					sliders[i].setEnabled(true);
 					sliders[i].playButton.setEnabled(true);
+					sliders[i].textField.setEnabled(true);
 				}
 			}
 		});
@@ -102,6 +106,8 @@ public class ProjectionPanel extends JPanel {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); 
+		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		g2.setColor(bgColor);
 		g2.fillRect(0, 0, getWidth(), getHeight());
 		g2.setStroke(new BasicStroke(lineThickness));
@@ -143,6 +149,15 @@ public class ProjectionPanel extends JPanel {
 			for(int j=0;j<4;j++) {
 				g2.drawLine((int)rotated[j][0], (int)rotated[j][1], (int)rotated[(j+1)%4][0], (int)rotated[(j+1)%4][1]);
 			}
+			/*
+			for(Point4D p: points) {
+				remove(p.coords);
+				p.coords.setText(p.getX() + "," + p.getY());
+				p.coords.setSize(150, 50);
+				p.coords.setLocation((int)p.getX(), (int)p.getY());
+				//p.coords.setBounds((int)p.getX(), (int)p.getY(), (int)(p.getX()*1.1), (int)(p.getY()*1.1));
+				add(p.coords);
+			}*/
 		}
 		else if(threeDButton.isSelected()) {
 			points.removeAll(points);
