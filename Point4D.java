@@ -1,8 +1,6 @@
-package hypercube;
+package pl.edu.pw.fizyka.pojava.HyperCube;
 
 import java.awt.Point;
-import java.util.ArrayList;
-
 import javax.swing.JLabel;
 
 public class Point4D extends Point{

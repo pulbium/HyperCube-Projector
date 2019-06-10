@@ -1,22 +1,34 @@
-package hypercube;
+package pl.edu.pw.fizyka.pojava.HyperCube;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 
 public class HyperCubeFrame extends JFrame {
 	
 	private static final long serialVersionUID = -1784095983031052573L;
 	
+	//internacjonalizacja
+	
+	static Locale[] supportedLocales = {
+		    new Locale("pl"),
+		    new Locale("en")
+		};
+	static Locale locale = supportedLocales[1];
+	ResourceBundle lang = ResourceBundle.getBundle("LanguageBundle",locale);
+	
 	//slidery
 	
-	RotSlider xzSlider = new RotSlider("Obraca wzglêdem p³aszczyzny XZ");
-	RotSlider yzSlider = new RotSlider("Obraca wzglêdem p³aszczyzny YZ");
-	RotSlider xySlider = new RotSlider("Obraca wzglêdem p³aszczyzny XY",true);
-	RotSlider xwSlider = new RotSlider("Obraca wzglêdem p³aszczyzny XW");
-	RotSlider ywSlider = new RotSlider("Obraca wzglêdem p³aszczyzny YW");
-	RotSlider zwSlider = new RotSlider("Obraca wzglêdem p³aszczyzny ZW");
+	RotSlider xzSlider = new RotSlider(lang.getString("sxz"));
+	RotSlider yzSlider = new RotSlider(lang.getString("syz"));
+	RotSlider xySlider = new RotSlider(lang.getString("sxy"),true);
+	RotSlider xwSlider = new RotSlider(lang.getString("sxw"));
+	RotSlider ywSlider = new RotSlider(lang.getString("syw"));
+	RotSlider zwSlider = new RotSlider(lang.getString("szw"));
 	
 	RotSlider[] sliders = {yzSlider, xzSlider, xySlider, xwSlider, ywSlider, zwSlider};
 	String[] sliderNames = {"YZ", "XZ", "XY", "XW", "YW", "ZW"};
@@ -30,11 +42,59 @@ public class HyperCubeFrame extends JFrame {
 	JPanel slidersPanel = new JPanel();
 	JPanel valuesPanel = new JPanel();
 	
-	HyperCubeMenuBar menuBar = new HyperCubeMenuBar(projectionPanel);
+	//menu
 	
+	HyperCubeMenuBar menuBar = new HyperCubeMenuBar(projectionPanel);
 	
 	public HyperCubeFrame() {
 
+		
+		JMenuItem changeLanguage = new JMenuItem(lang.getString("m24"));
+		changeLanguage.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if(locale.equals(supportedLocales[0]))
+					locale=supportedLocales[1];
+				else
+					locale=supportedLocales[0];
+			
+				lang = ResourceBundle.getBundle("LanguageBundle",locale);
+				
+				xzSlider.setToolTipText(lang.getString("sxz"));
+				xySlider.setToolTipText(lang.getString("sxy"));
+				yzSlider.setToolTipText(lang.getString("syz"));
+				xwSlider.setToolTipText(lang.getString("sxw"));
+				zwSlider.setToolTipText(lang.getString("szw"));
+				ywSlider.setToolTipText(lang.getString("syw"));
+				
+				for(int i = 0;i<6;i++)
+					sliders[i].playButton.setToolTipText(lang.getString("ptip"));
+				
+				menuBar.fileMenu.setText(lang.getString("m1"));
+				menuBar.save.setText(lang.getString("m11"));
+				menuBar.settingsMenu.setText(lang.getString("m2"));
+				menuBar.changeBG.setText(lang.getString("m21"));
+				menuBar.changeLine.setText(lang.getString("m22"));
+				menuBar.changeThickness.setText(lang.getString("m23"));
+				changeLanguage.setText(lang.getString("m24"));
+				menuBar.parametersMenu.setText(lang.getString("m3"));
+				menuBar.changeSize.setText(lang.getString("m31"));
+				menuBar.changeDistance.setText(lang.getString("m32"));
+				menuBar.settingsMenu.setText(lang.getString("m2"));
+				menuBar.parametersMenu.setText(lang.getString("m3"));
+				menuBar.changeSize.setText(lang.getString("m31"));
+				menuBar.changeDistance.setText(lang.getString("m32"));
+				projectionPanel.perspectiveButton.setText(lang.getString("p1"));
+				projectionPanel.paralellButton.setText(lang.getString("p2"));
+				projectionPanel.fourDButton.setToolTipText(lang.getString("p3"));
+				projectionPanel.perspectiveButton.setToolTipText(lang.getString("p4"));
+				projectionPanel.paralellButton.setToolTipText(lang.getString("p5"));
+				
+			}
+		});
+		
+		menuBar.settingsMenu.add(changeLanguage);
 		setJMenuBar(menuBar);
 		
 		
@@ -42,7 +102,7 @@ public class HyperCubeFrame extends JFrame {
 		bottomPanel.setLayout(new BorderLayout());
 		slidersPanel.setLayout(new GridLayout(12,1));
 		valuesPanel.setLayout(new GridLayout(6,3));
-		menuPanel.setLayout(new GridLayout(7,1));
+		menuPanel.setLayout(new GridLayout(8,1));
 		
 				
 		menuPanel.add(projectionPanel.twoDButton);
@@ -51,6 +111,8 @@ public class HyperCubeFrame extends JFrame {
 		menuPanel.add(new JLabel());
 		menuPanel.add(projectionPanel.paralellButton);
 		menuPanel.add(projectionPanel.perspectiveButton);
+		menuPanel.add(new JLabel());
+		menuPanel.add(projectionPanel.resetButton);
 
 		
 		for(int i = 0;i<6;i++) {
@@ -76,13 +138,7 @@ public class HyperCubeFrame extends JFrame {
 	}
 	
 	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable(){
-			public void run() {
 				HyperCubeFrame frame = new HyperCubeFrame();
 				frame.setVisible(true);
-				ExecutorService exec = Executors.newSingleThreadExecutor();
-				exec.shutdown();
-			}
-		});
 	}
 }

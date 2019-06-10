@@ -1,10 +1,11 @@
-package hypercube;
+package pl.edu.pw.fizyka.pojava.HyperCube;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 import javax.swing.*;
 public class ProjectionPanel extends JPanel {
@@ -20,9 +21,9 @@ public class ProjectionPanel extends JPanel {
 	JRadioButton fourDButton = new JRadioButton("4D");
 	BufferedImage buffer;
 	
-	JRadioButton perspectiveButton = new JRadioButton("Rzut perspektywiczny");
-	JRadioButton paralellButton = new JRadioButton("Rzut równoleg³y");
-	
+	JRadioButton perspectiveButton = new JRadioButton(ResourceBundle.getBundle("LanguageBundle",HyperCubeFrame.locale).getString("p1"));
+	JRadioButton paralellButton = new JRadioButton(ResourceBundle.getBundle("LanguageBundle",HyperCubeFrame.locale).getString("p2"));
+	JButton resetButton = new JButton("Reset");
 	
 	public ProjectionPanel(RotSlider[] sliders) {
 		super();
@@ -83,8 +84,17 @@ public class ProjectionPanel extends JPanel {
 			}
 		});
 		
-		fourDButton.setToolTipText("WCHODZIMY W CZWARTY WYMIAR!!!");
+		fourDButton.setToolTipText(ResourceBundle.getBundle("LanguageBundle",HyperCubeFrame.locale).getString("p3"));
 		
+		resetButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				for(int i = 0;i < 6;i++)
+					sliders[i].setValue(0);
+				
+			}
+		});
 		
 		ButtonGroup dimensionButtons = new ButtonGroup();
 		dimensionButtons.add(twoDButton);
@@ -95,10 +105,10 @@ public class ProjectionPanel extends JPanel {
 		
 		ButtonGroup projectionButtons = new ButtonGroup();
 		projectionButtons.add(perspectiveButton);
-		perspectiveButton.setToolTipText("To, co jest bli¿ej, jest wiêksze, a to, co dalej, mniejsze");
+		perspectiveButton.setToolTipText(ResourceBundle.getBundle("LanguageBundle",HyperCubeFrame.locale).getString("p4"));
 		perspectiveButton.setEnabled(false);
 		projectionButtons.add(paralellButton);
-		paralellButton.setToolTipText("Wszystkie odleg³oœci s¹ sobie równe niezale¿nie od odleg³oœci od obserwatora");
+		paralellButton.setToolTipText(ResourceBundle.getBundle("LanguageBundle",HyperCubeFrame.locale).getString("p5"));
 
 	}
 	

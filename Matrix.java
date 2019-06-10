@@ -1,4 +1,4 @@
-package hypercube;
+package pl.edu.pw.fizyka.pojava.HyperCube;
 
 public class Matrix { 
 	public static double[][] MatMulMat(double[][] m1, double[][] m2){

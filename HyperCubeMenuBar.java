@@ -1,9 +1,10 @@
-package hypercube;
+package pl.edu.pw.fizyka.pojava.HyperCube;
 
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
 import javax.swing.JColorChooser;
@@ -18,18 +19,18 @@ public class HyperCubeMenuBar extends JMenuBar {
 
 	private static final long serialVersionUID = 1L;
 
-	JMenu fileMenu = new JMenu("Plik");
-	JMenuItem save = new JMenuItem("Zapisz obraz");
+	JMenu fileMenu = new JMenu(ResourceBundle.getBundle("LanguageBundle",HyperCubeFrame.locale).getString("m1"));
+	JMenuItem save = new JMenuItem(ResourceBundle.getBundle("LanguageBundle",HyperCubeFrame.locale).getString("m11"));
 	
-	JMenu colorMenu = new JMenu("Obraz");
-	JMenuItem changeBG = new JMenuItem("Zmieñ kolor t³a");
-	JMenuItem changeLine = new JMenuItem("Zmieñ kolor linii");
-	JMenuItem changeThickness = new JMenuItem("Zmieñ gruboœæ linii");
+	JMenu settingsMenu = new JMenu(ResourceBundle.getBundle("LanguageBundle",HyperCubeFrame.locale).getString("m2"));
+	JMenuItem changeBG = new JMenuItem(ResourceBundle.getBundle("LanguageBundle",HyperCubeFrame.locale).getString("m21"));
+	JMenuItem changeLine = new JMenuItem(ResourceBundle.getBundle("LanguageBundle",HyperCubeFrame.locale).getString("m22"));
+	JMenuItem changeThickness = new JMenuItem(ResourceBundle.getBundle("LanguageBundle",HyperCubeFrame.locale).getString("m23"));
 	
-	JMenu optionsMenu = new JMenu("Parametry");
-	JMenuItem changeSize = new JMenuItem("Rozmiar hiperszeœcianu");
-	JMenuItem changeDistance = new JMenuItem("Odleg³oœæ obserwatora");
-
+	JMenu parametersMenu = new JMenu(ResourceBundle.getBundle("LanguageBundle",HyperCubeFrame.locale).getString("m3"));
+	JMenuItem changeSize = new JMenuItem(ResourceBundle.getBundle("LanguageBundle",HyperCubeFrame.locale).getString("m31"));
+	JMenuItem changeDistance = new JMenuItem(ResourceBundle.getBundle("LanguageBundle",HyperCubeFrame.locale).getString("m32"));
+	
 	public HyperCubeMenuBar(ProjectionPanel projectionPanel) {
 		
 		save.addActionListener(new ActionListener() {
@@ -56,7 +57,7 @@ public class HyperCubeMenuBar extends JMenuBar {
 					
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				projectionPanel.bgColor = JColorChooser.showDialog(null, "Wybierz kolor", null);
+				projectionPanel.bgColor = JColorChooser.showDialog(null, "", null);
 			}
 		});
 				
@@ -64,7 +65,7 @@ public class HyperCubeMenuBar extends JMenuBar {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				projectionPanel.lineColor = JColorChooser.showDialog(null, "Wybierz kolor", null);
+				projectionPanel.lineColor = JColorChooser.showDialog(null, "", null);
 			}
 		});
 				
@@ -72,7 +73,7 @@ public class HyperCubeMenuBar extends JMenuBar {
 				
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				projectionPanel.lineThickness = Integer.parseInt(JOptionPane.showInputDialog("Podaj gruboœæ linii", 1));				 
+				projectionPanel.lineThickness = Integer.parseInt(JOptionPane.showInputDialog("", 1));				 
 			}
 		});
 				
@@ -80,7 +81,7 @@ public class HyperCubeMenuBar extends JMenuBar {
 					
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				projectionPanel.size = Integer.parseInt(JOptionPane.showInputDialog("Podaj d³ugoœæ krawêdzi:", 100))/2;
+				projectionPanel.size = Integer.parseInt(JOptionPane.showInputDialog("", 100))/2;
 			}
 		});
 				
@@ -88,19 +89,19 @@ public class HyperCubeMenuBar extends JMenuBar {
 				
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				projectionPanel.distance = Integer.parseInt(JOptionPane.showInputDialog("Podaj odleg³oœæ obserwatora:", 200));
+				projectionPanel.distance = Integer.parseInt(JOptionPane.showInputDialog("", 200));
 			}
 		});
 		
 		fileMenu.add(save);
-		colorMenu.add(changeBG);
-		colorMenu.add(changeLine);
-		colorMenu.add(changeThickness);
-		optionsMenu.add(changeSize);
-		optionsMenu.add(changeDistance);
+		settingsMenu.add(changeBG);
+		settingsMenu.add(changeLine);
+		settingsMenu.add(changeThickness);
+		parametersMenu.add(changeSize);
+		parametersMenu.add(changeDistance);
 		
 		add(fileMenu);
-		add(colorMenu);
-		add(optionsMenu);
+		add(settingsMenu);
+		add(parametersMenu);
 	}
 }

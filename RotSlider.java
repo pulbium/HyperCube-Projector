@@ -1,9 +1,8 @@
-package hypercube;
+package pl.edu.pw.fizyka.pojava.HyperCube;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.ResourceBundle;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -14,7 +13,7 @@ public class RotSlider extends JSlider {
 	private static final long serialVersionUID = 1L;
 	
 	double angle, speed = 0.02;
-	JTextField textField = new JTextField("000");
+	JTextField textField = new JTextField("0");
 	JToggleButton playButton = new JToggleButton();
 	
 	public RotSlider(String toolTip, boolean enabled) {
@@ -47,12 +46,15 @@ public class RotSlider extends JSlider {
 						setValue(Integer.parseInt(textField.getText()));
 					}
 				}catch(NumberFormatException ex) {
-					JOptionPane.showMessageDialog(null, "Ile wynosi k¹t "+textField.getText()+"°?", "Podano z³y k¹t", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, ResourceBundle.getBundle("LanguageBundle",HyperCubeFrame.locale).getString("err1")
+							+" "+textField.getText()+"°?", 
+							ResourceBundle.getBundle("LanguageBundle",HyperCubeFrame.locale).getString("err2")
+							, JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});			
 		
-		playButton.setToolTipText("W³¹cz animacjê");
+		playButton.setToolTipText(ResourceBundle.getBundle("LanguageBundle",HyperCubeFrame.locale).getString("ptip"));
 		
 		playButton.addActionListener(new ActionListener() {
 			
