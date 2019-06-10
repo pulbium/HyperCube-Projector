@@ -1,2 +1,0 @@
-# JavaProject
-HyperCube Projector
